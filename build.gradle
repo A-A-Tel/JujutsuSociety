@@ -5,12 +5,12 @@ plugins {
 }
 
 application {
-    mainClass = 'com.anthony.Main'
+    mainClass = 'com.anthony.bot.Main'
 }
 
 jar {
     manifest {
-        attributes 'Main-Class': 'com.anthony.Main'
+        attributes 'Main-Class': 'com.anthony.bot.Main'
     }
 }
 
