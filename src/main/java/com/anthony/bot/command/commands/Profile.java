@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import java.util.List;
 
 public class Profile implements ICommand {
+
     @Override
     public String getName() {
         return "profile";
@@ -49,9 +50,9 @@ public class Profile implements ICommand {
             channel.sendMessage("<@&1306721051337822299> This person just applied:" +
                     "\r\n    Name: " + event.getUser().getAsMention() +
                     "\r\n    Age: " + age +
-                    "\r\n    Level: " + level)
-                    .queue();
-            event.reply("Applied, now shut up and wait").queue();
+                    "\r\n    Level: " + level
+            ).queue();
+            event.reply("Yo wsp, go to <#1323312261246488617> for your roles alr? We will approve you soon.").queue();
         }
     }
 }
