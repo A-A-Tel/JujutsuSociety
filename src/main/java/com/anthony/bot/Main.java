@@ -23,7 +23,6 @@ public class Main extends ListenerAdapter {
 
     //// Beginning Event Listener ////
 
-
     private CommandManager command = new CommandManager();
 
     @Override

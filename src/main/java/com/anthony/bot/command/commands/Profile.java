@@ -25,7 +25,8 @@ public class Profile implements ICommand {
     public List<OptionData> getOptions() {
         return List.of(
                 new OptionData(OptionType.INTEGER, "age", "Tell us your age", true),
-                new OptionData(OptionType.INTEGER, "level", "Tell us your level", true)
+                new OptionData(OptionType.INTEGER, "level", "Tell us your level", true),
+                new OptionData(OptionType.STRING, "pitch", "Tell us about yourself", false)
         );
     }
 
@@ -39,6 +40,7 @@ public class Profile implements ICommand {
 
         int age = event.getOption("age").getAsInt();
         int level = event.getOption("level").getAsInt();
+        String pitch = event.getOption("pitch") != null ? event.getOption("pitch").getAsString() : "<none>";
 
         if (event.getChannelIdLong() != 1323324965122211870L) {
 
@@ -50,7 +52,8 @@ public class Profile implements ICommand {
             channel.sendMessage("<@&1306721051337822299> This person just applied:" +
                     "\r\n    Name: " + event.getUser().getAsMention() +
                     "\r\n    Age: " + age +
-                    "\r\n    Level: " + level
+                    "\r\n    Level: " + level +
+                    "\r\n    Pitch: " + pitch
             ).queue();
             event.reply("Yo wsp, go to <#1323312261246488617> for your roles alr? We will approve you soon.").queue();
         }
