@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+application {
+    mainClass = 'com.anthony.Main'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.anthony.Main'
+    }
+}
+
+shadowJar {
+    archiveBaseName.set('the')
+    archiveVersion.set("menace")
+}
+
+group = 'com.anthony.bot'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("net.dv8tion:JDA:5.2.2")
+    implementation('com.google.code.gson:gson:2.10.1')
+    implementation("com.vdurmont:emoji-java:5.1.1")
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += ['--enable-preview']
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(22)
+    }
+}
+
+tasks.withType(JavaExec) {
+    jvmArgs += '--enable-preview'
+}
