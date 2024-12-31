@@ -43,6 +43,7 @@ public class Main extends ListenerAdapter {
 
         // Set the server stat channel correctly
         guild.loadMembers();
+        delay(2500);
         setStatChannels(guild);
     }
 
