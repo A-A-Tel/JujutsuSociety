@@ -31,6 +31,7 @@ public class Kill implements ICommand {
     @Override
     public void execute(SlashCommandInteractionEvent event) {
         event.reply("Goodbye, I'll be back in a minute.").queue();
+        delay();
         System.exit(0);
     }
 
