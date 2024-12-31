@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.channel.ChannelType;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
@@ -36,6 +37,9 @@ public class Main extends ListenerAdapter {
     public void onReady(@NotNull ReadyEvent event) {
 
         command.LoadCommandsGlobal();
+
+        // Set the server stat channel correctly
+        setStatChannels(JDA.getGuildById(1306668411446628443L));
     }
 
     @Override
@@ -57,16 +61,15 @@ public class Main extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
 
-        Guild guild = event.getGuild();
+        // Set the server stat channel correctly
+        setStatChannels(event.getGuild());
+    }
+
+    @Override
+    public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
 
         // Set the server stat channel correctly
-
-
-
-        guild.getVoiceChannelById(1307076340675248170L).getManager().setName("Total Members: " + getRoleMembersAmount(guild.getRoleById(1306668411446628450L))).queue();
-        guild.getVoiceChannelById(1307076344332419114L).getManager().setName("Jujutsu Tech: " + getRoleMembersAmount(guild.getRoleById(1323314326106275880L))).queue();
-        guild.getVoiceChannelById(1307076348035989705L).getManager().setName("Mikaboshi Syndicate: " + getRoleMembersAmount(guild.getRoleById(1323314375511248996L))).queue();
-        guild.getVoiceChannelById(1323783618803273819L).getManager().setName("Mechamaru: " + getRoleMembersAmount(guild.getRoleById(1306668411518193874L))).queue();
+        setStatChannels(event.getGuild());
     }
 
     private void delay(long millis) {
@@ -92,5 +95,12 @@ public class Main extends ListenerAdapter {
             }
         }
         return memberAmount;
+    }
+
+    private void setStatChannels(Guild guild) {
+        guild.getVoiceChannelById(1307076340675248170L).getManager().setName("Total Members: " + getRoleMembersAmount(guild.getRoleById(1306668411446628450L))).queue();
+        guild.getVoiceChannelById(1307076344332419114L).getManager().setName("Jujutsu Tech: " + getRoleMembersAmount(guild.getRoleById(1323314326106275880L))).queue();
+        guild.getVoiceChannelById(1307076348035989705L).getManager().setName("Mikaboshi Syndicate: " + getRoleMembersAmount(guild.getRoleById(1323314375511248996L))).queue();
+        guild.getVoiceChannelById(1323783618803273819L).getManager().setName("Mechamaru: " + getRoleMembersAmount(guild.getRoleById(1306668411518193874L))).queue();
     }
 }
