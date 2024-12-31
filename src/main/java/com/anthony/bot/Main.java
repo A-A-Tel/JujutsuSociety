@@ -36,10 +36,14 @@ public class Main extends ListenerAdapter {
     @Override
     public void onReady(@NotNull ReadyEvent event) {
 
+
+        Guild guild = JDA.getGuildById(1306668411446628443L);
+
         command.LoadCommandsGlobal();
 
         // Set the server stat channel correctly
-        setStatChannels(JDA.getGuildById(1306668411446628443L));
+        guild.loadMembers();
+        setStatChannels(guild);
     }
 
     @Override
@@ -84,10 +88,7 @@ public class Main extends ListenerAdapter {
 
     private int getRoleMembersAmount(Role role) {
 
-        if (role == null) {
-            JDA.getGuildById(1306668411446628443L).getTextChannelById(1306668416916000839L).sendMessage("Fuck").queue();
-            return 0;
-        }
+        if (role == null) return 0;
 
         List<Member> members =role.getGuild().getMembers();
 
