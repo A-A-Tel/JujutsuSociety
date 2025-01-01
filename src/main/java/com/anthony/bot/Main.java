@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.channel.ChannelType;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -37,13 +36,14 @@ public class Main extends ListenerAdapter {
     public void onReady(@NotNull ReadyEvent event) {
 
 
-        Guild guild = JDA.getGuildById(1306668411446628443L);
+        Guild guild = JDA.getGuilds().getFirst();
+
 
         command.LoadCommandsGlobal();
 
         // Set the server stat channel correctly
         guild.loadMembers();
-        delay(2500);
+        delay(10000);
         setStatChannels(guild);
     }
 
@@ -67,6 +67,8 @@ public class Main extends ListenerAdapter {
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
 
         // Set the server stat channel correctly
+        event.getGuild().loadMembers();
+        delay(10000);
         setStatChannels(event.getGuild());
     }
 
@@ -74,8 +76,12 @@ public class Main extends ListenerAdapter {
     public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
 
         // Set the server stat channel correctly
+        event.getGuild().loadMembers();
+        delay(10000);
         setStatChannels(event.getGuild());
     }
+
+
 
     private void delay(long millis) {
         try {
@@ -83,8 +89,6 @@ public class Main extends ListenerAdapter {
         } catch (InterruptedException _) {
             Thread.currentThread().interrupt();
         }
-
-
     }
 
     private int getRoleMembersAmount(Role role) {
